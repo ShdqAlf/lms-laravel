@@ -1,0 +1,52 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\authController;
+use App\Http\Controllers\admin\kelolaAkunController;
+use App\Http\Controllers\admin\kelolaCoursesController;
+use App\Http\Controllers\guru\kelolaMateriController;
+use App\Http\Controllers\siswa\coursesController;
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// Route General
+Route::get('/', [authController::class, 'login'])->name('login');
+Route::get('dashboard', [dashboardController::class, 'dashboard'])->name('dashboard');
+Route::post('login', [authController::class, 'authenticate'])->name('authenticate');
+Route::get('logout', [authController::class, 'logout'])->name('logout');
+
+// Route Admin
+// Kelola Akun
+Route::get('kelolaakun', [kelolaAkunController::class, 'kelolaakun'])->name('kelolaakun');
+Route::post('kelolaakun/update/{id}', [kelolaAkunController::class, 'update'])->name('updateakun');
+Route::post('kelolaakun/changepassword/{id}', [kelolaAkunController::class, 'changePassword'])->name('changepasswordakun');
+Route::delete('kelolaakun/delete/{id}', [kelolaAkunController::class, 'delete'])->name('deleteakun');
+Route::post('kelolaakun/store', [kelolaAkunController::class, 'store'])->name('storeakun');
+
+// Kelola Courses
+Route::get('kelolacourses', [kelolaCoursesController::class, 'kelolacourses'])->name('kelolacourses');
+Route::post('kelolacourses/store', [kelolaCoursesController::class, 'store'])->name('storecourse');
+Route::post('kelolacourses/update/{id}', [kelolaCoursesController::class, 'update'])->name('updatecourse');
+Route::delete('kelolacourses/delete/{id}', [kelolaCoursesController::class, 'delete'])->name('deletecourse');
+
+// Route Guru
+// Kelola Materi
+Route::get('kelolamateri', [kelolaMateriController::class, 'kelolamateri'])->name('kelolamateri');
+Route::post('kelolamateri/store', [kelolaMateriController::class, 'store'])->name('storekelolamateri');
+
+// Route Siswa
+// Courses
+// Route::get('course', [coursesController::class, 'course'])->name('course');
+Route::get('course/{id}', [coursesController::class, 'course'])->name('course');
