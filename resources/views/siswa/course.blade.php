@@ -23,6 +23,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            {{ $silabus->deskripsi_silabus }}
                             <!-- Modul Section -->
                             <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
                                 <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
@@ -101,6 +102,20 @@
         </section>
     </div>
 </div>
-
+<script>
+    function toggleAccordion(id) {
+        const content = document.getElementById(`content-${id}`);
+        const icon = document.getElementById(`icon-${id}`);
+        if (content.classList.contains('d-none')) {
+            content.classList.remove('d-none');
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
+        } else {
+            content.classList.add('d-none');
+            icon.classList.remove('bi-chevron-up');
+            icon.classList.add('bi-chevron-down');
+        }
+    }
+</script>
 @include('layout/foot')
 </div>

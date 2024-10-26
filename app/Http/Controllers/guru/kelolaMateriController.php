@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Modul;
 use App\Models\Ppt;
 use App\Models\Lkpd;
+use App\Models\Silabus;
 
 class kelolaMateriController extends Controller
 {
@@ -20,8 +21,9 @@ class kelolaMateriController extends Controller
         $modul = Modul::where('course_id', $course_id)->first();
         $ppt = Ppt::where('course_id', $course_id)->first();
         $lkpd = Lkpd::where('course_id', $course_id)->first();
+        $silabus = Silabus::where('course_id', $course_id)->first();
 
-        return view('guru.kelolamateri', compact('modul', 'ppt', 'lkpd'));
+        return view('guru.kelolamateri', compact('modul', 'ppt', 'lkpd', 'silabus'));
     }
 
     public function store(Request $request)
@@ -60,6 +62,14 @@ class kelolaMateriController extends Controller
                 ]
             );
         }
+
+        // Update atau Tambahkan silabus
+        Silabus::updateOrCreate(
+            ['course_id' => $course_id],  // Kondisi untuk update
+            [
+                'deskripsi_silabus' => $request->deskripsi_silabus,
+            ]
+        );
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
     }

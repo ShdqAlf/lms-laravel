@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Modul;
 use App\Models\Ppt;
 use App\Models\Lkpd;
+use App\Models\Silabus;
 
 class coursesController extends Controller
 {
@@ -28,8 +29,9 @@ class coursesController extends Controller
         $modul = Modul::where('course_id', $id)->first();
         $ppt = Ppt::where('course_id', $id)->first();
         $lkpd = Lkpd::where('course_id', $id)->first();
+        $silabus = Silabus::where('course_id', $id)->first();
 
-        return view('siswa.course', compact('courses', 'course', 'modul', 'ppt', 'lkpd'));
+        return view('siswa.course', compact('courses', 'course', 'modul', 'ppt', 'lkpd', 'silabus'));
     }
 
     public function showModul($id)

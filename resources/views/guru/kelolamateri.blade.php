@@ -27,7 +27,10 @@
                                 <form method="POST" action="{{ route('storekelolamateri') }}" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="course_id" value="{{ Auth::user()->course->id }}">
-
+                                    <div class="form-group mb-3">
+                                        <label for="deskripsi_silabus" class="form-label">Masukkan Deskripsi Silabus</label>
+                                        <textarea class="form-control" id="deskripsi_silabus" name="deskripsi_silabus" rows="3" required>{{ old('deskripsi_silabus', $silabus->deskripsi_silabus ?? '') }}</textarea>
+                                    </div>
                                     <!-- Modul Section -->
                                     <div class="border border-gray-300 mb-2 rounded-lg">
                                         <button type="button" class="w-full px-4 py-2 text-left text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none"
@@ -116,6 +119,20 @@
         </section>
     </div>
 </div>
+<script>
+    function toggleAccordion(id) {
+        const content = document.getElementById(`content-${id}`);
+        const icon = document.getElementById(`icon-${id}`);
 
+        // Toggle visibility
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            icon.style.transform = "rotate(180deg)"; // Rotate down
+        } else {
+            content.classList.add('hidden');
+            icon.style.transform = "rotate(0deg)"; // Rotate back up
+        }
+    }
+</script>
 @include('layout/foot')
 </div>
