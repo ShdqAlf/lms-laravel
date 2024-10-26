@@ -10,15 +10,17 @@
     </div>
 </footer>
 <script>
-    function toggleAccordion(index) {
-        const content = document.getElementById(`content-${index}`);
-        const icon = document.getElementById(`icon-${index}`);
-        if (content.classList.contains('hidden')) {
-            content.classList.remove('hidden');
-            icon.classList.add('transform', 'rotate-180');
+    function toggleAccordion(id) {
+        const content = document.getElementById(`content-${id}`);
+        const icon = document.getElementById(`icon-${id}`);
+        if (content.classList.contains('d-none')) {
+            content.classList.remove('d-none');
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
         } else {
-            content.classList.add('hidden');
-            icon.classList.remove('transform', 'rotate-180');
+            content.classList.add('d-none');
+            icon.classList.remove('bi-chevron-up');
+            icon.classList.add('bi-chevron-down');
         }
     }
 </script>

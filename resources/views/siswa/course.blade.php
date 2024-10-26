@@ -24,63 +24,73 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- Modul Section -->
-                            <div class="border border-gray-300 mb-2 rounded-lg">
-                                <button type="button" class="w-full px-4 py-2 text-left text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none"
+                            <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
+                                <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
                                     onclick="toggleAccordion(1)">
-                                    <div class="flex justify-between items-center">
-                                        <span>Modul</span>
-                                        <svg class="w-5 h-5" id="icon-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                        </svg>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">Modul {{ $course->course }}</span>
+                                        <i class="bi bi-chevron-down" id="icon-1"></i>
                                     </div>
                                 </button>
-                                <div id="content-1" class="hidden p-4 bg-white">
+                                <div id="content-1" class="p-4 bg-white border-top d-none">
                                     @if($modul)
-                                    <p>{{ $modul->deskripsi_modul }}</p>
-                                    <embed type="application/pdf" src="{{ asset('storage/' . $modul->pdf_modul) }}" width="600" height="400"></embed>
+                                    <a href="{{ route('showModul', $modul->id) }}" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
+                                        <i class="bi bi-file-earmark-text-fill text-primary me-3" style="font-size: 1.8rem;"></i>
+                                        <div>
+
+                                            <p class="m-0 fw-bold">Materi Modul</p>
+                                            <small class="text-muted">File</small>
+                                        </div>
+                                    </a>
                                     @else
-                                    <p>Belum ada modul yang tersedia.</p>
+                                    <p>Belum ada Modul yang tersedia.</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- LKPD Section -->
+                            <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
+                                <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
+                                    onclick="toggleAccordion(2)">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">LKPD {{ $course->course }}</span>
+                                        <i class="bi bi-chevron-down" id="icon-2"></i>
+                                    </div>
+                                </button>
+                                <div id="content-2" class="p-4 bg-white border-top d-none">
+                                    @if($lkpd)
+                                    <a href="{{ route('showLkpd', $lkpd->id) }}" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
+                                        <i class="bi bi-file-earmark-text-fill text-success me-3" style="font-size: 1.8rem;"></i>
+                                        <div>
+                                            <p class="m-0 fw-bold">Materi LKPD</p>
+                                            <small class="text-muted">File</small>
+                                        </div>
+                                    </a>
+                                    @else
+                                    <p>Belum ada LKPD yang tersedia.</p>
                                     @endif
                                 </div>
                             </div>
 
                             <!-- PPT Section -->
-                            <div class="border border-gray-300 mb-2 rounded-lg">
-                                <button type="button" class="w-full px-4 py-2 text-left text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none"
-                                    onclick="toggleAccordion(2)">
-                                    <div class="flex justify-between items-center">
-                                        <span>PPT</span>
-                                        <svg class="w-5 h-5" id="icon-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                        </svg>
+                            <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
+                                <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
+                                    onclick="toggleAccordion(3)">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">PPT {{ $course->course }}</span>
+                                        <i class="bi bi-chevron-down" id="icon-3"></i>
                                     </div>
                                 </button>
-                                <div id="content-2" class="hidden p-4 bg-white">
+                                <div id="content-3" class="p-4 bg-white border-top d-none">
                                     @if($ppt)
-                                    <p><a href="{{ $ppt->link_ppt }}" target="_blank">{{ $ppt->judul_ppt }}</a></p>
+                                    <a href="{{ route('showPpt', $ppt->id) }}" target="_blank" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
+                                        <i class="bi bi-file-earmark-play-fill text-danger me-3" style="font-size: 1.8rem;"></i>
+                                        <div>
+                                            <p class="m-0 fw-bold">{{ $ppt->judul_ppt }}</p>
+                                            <small class="text-muted">Klik untuk melihat PPT</small>
+                                        </div>
+                                    </a>
                                     @else
                                     <p>Belum ada PPT yang tersedia.</p>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <!-- LKPD Section -->
-                            <div class="border border-gray-300 mb-2 rounded-lg">
-                                <button type="button" class="w-full px-4 py-2 text-left text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none"
-                                    onclick="toggleAccordion(3)">
-                                    <div class="flex justify-between items-center">
-                                        <span>LKPD</span>
-                                        <svg class="w-5 h-5" id="icon-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div id="content-3" class="hidden p-4 bg-white">
-                                    @if($lkpd)
-                                    <p>{{ $lkpd->deskripsi_lkpd }}</p>
-                                    <embed type="application/pdf" src="{{ asset('storage/' . $lkpd->pdf_lkpd) }}" width="600" height="400"></embed>
-                                    @else
-                                    <p>Belum ada LKPD yang tersedia.</p>
                                     @endif
                                 </div>
                             </div>

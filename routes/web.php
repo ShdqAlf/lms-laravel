@@ -50,3 +50,6 @@ Route::post('kelolamateri/store', [kelolaMateriController::class, 'store'])->nam
 // Courses
 // Route::get('course', [coursesController::class, 'course'])->name('course');
 Route::get('course/{id}', [coursesController::class, 'course'])->name('course');
+Route::get('modul/{id}', [coursesController::class, 'showModul'])->name('showModul');
+Route::get('ppt/{id}', [coursesController::class, 'showPpt'])->name('showPpt');
+Route::get('lkpd/{id}', [coursesController::class, 'showLkpd'])->name('showLkpd');

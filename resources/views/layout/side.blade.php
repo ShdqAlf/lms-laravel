@@ -106,12 +106,6 @@
 
                         <li class="sidebar-title">Settings</li>
                         <li class="sidebar-item">
-                            <a href="ui-file-uploader.html" class='sidebar-link'>
-                                <i class="bi bi-person-badge"></i>
-                                <span>Akun</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a href="{{ route('logout') }}" class='sidebar-link'>
                                 <i class="bi bi-arrow-bar-left"></i>
                                 <span>Logout</span>

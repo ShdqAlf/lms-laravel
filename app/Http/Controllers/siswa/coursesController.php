@@ -31,4 +31,28 @@ class coursesController extends Controller
 
         return view('siswa.course', compact('courses', 'course', 'modul', 'ppt', 'lkpd'));
     }
+
+    public function showModul($id)
+    {
+        $courses = Course::all();
+        $course = Course::findOrFail($id);
+        $modul = Modul::findOrFail($id);
+        return view('siswa.showmodul', compact('courses', 'course', 'modul'));
+    }
+
+    public function showPpt($id)
+    {
+        $courses = Course::all();
+        $course = Course::findOrFail($id);
+        $ppt = Ppt::findOrFail($id);
+        return view('siswa.ppt', compact('courses', 'course', 'ppt'));
+    }
+
+    public function showLkpd($id)
+    {
+        $courses = Course::all();
+        $course = Course::findOrFail($id);
+        $lkpd = Lkpd::findOrFail($id);
+        return view('siswa.lkpd', compact('courses', 'course', 'lkpd'));
+    }
 }
