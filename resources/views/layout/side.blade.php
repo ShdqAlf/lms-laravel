@@ -24,11 +24,19 @@
                         {{-- Menu untuk Guru --}}
                         @if (Auth::user()->role == 'guru')
                         <li class="sidebar-title">Guru</li>
-                        <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
                                 <i class="bi bi-file-text"></i>
-                                <span>Kelola Pretest</span>
+                                <span>Pretest</span>
                             </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{{ route('kelolapretest') }}">Kelola Pretest</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-ckeditor.html">Penilaian Pretest</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-item">
                             <a href="{{ route('kelolamateri') }}" class='sidebar-link'>
@@ -36,11 +44,19 @@
                                 <span>Kelola Materi</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
                                 <i class="bi bi-file-text-fill"></i>
-                                <span>Kelola Postest</span>
+                                <span>Postest</span>
                             </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="">Kelola Postest</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="form-editor-ckeditor.html">Penilaian Postest</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-item">
                             <a href="index.html" class='sidebar-link'>

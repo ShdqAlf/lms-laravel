@@ -23,7 +23,11 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            @if($silabus)
                             {{ $silabus->deskripsi_silabus }}
+                            @else
+                            <p>Belum ada Silabus.</p>
+                            @endif
                             <!-- Modul Section -->
                             <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
                                 <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"

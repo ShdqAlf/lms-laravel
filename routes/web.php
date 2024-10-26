@@ -6,6 +6,8 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\admin\kelolaAkunController;
 use App\Http\Controllers\admin\kelolaCoursesController;
 use App\Http\Controllers\guru\kelolaMateriController;
+use App\Http\Controllers\guru\kelolaPostestController;
+use App\Http\Controllers\guru\kelolaPretestController;
 use App\Http\Controllers\siswa\coursesController;
 
 
@@ -45,6 +47,10 @@ Route::delete('kelolacourses/delete/{id}', [kelolaCoursesController::class, 'del
 // Kelola Materi
 Route::get('kelolamateri', [kelolaMateriController::class, 'kelolamateri'])->name('kelolamateri');
 Route::post('kelolamateri/store', [kelolaMateriController::class, 'store'])->name('storekelolamateri');
+// Kelola Pretest
+Route::get('kelolapretest', [kelolaPretestController::class, 'kelolapretest'])->name('kelolapretest');
+Route::post('kelolapretest/store', [kelolaPretestController::class, 'store'])->name('storepretest');
+Route::delete('kelolapretest/delete/{id}', [kelolaPretestController::class, 'delete'])->name('deletepretest');
 
 // Route Siswa
 // Courses
