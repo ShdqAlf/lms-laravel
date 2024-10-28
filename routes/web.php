@@ -9,7 +9,7 @@ use App\Http\Controllers\guru\kelolaMateriController;
 use App\Http\Controllers\guru\kelolaPostestController;
 use App\Http\Controllers\guru\kelolaPretestController;
 use App\Http\Controllers\siswa\coursesController;
-
+use App\Http\Controllers\siswa\pretestController;
 
 
 /*
@@ -59,3 +59,8 @@ Route::get('course/{id}', [coursesController::class, 'course'])->name('course');
 Route::get('modul/{id}', [coursesController::class, 'showModul'])->name('showModul');
 Route::get('ppt/{id}', [coursesController::class, 'showPpt'])->name('showPpt');
 Route::get('lkpd/{id}', [coursesController::class, 'showLkpd'])->name('showLkpd');
+
+// Pretest
+Route::get('pretest', [pretestController::class, 'pretest'])->name('pretest');
+Route::get('showpretestquestion', [PretestController::class, 'showPretestQuestions'])->name('showPretestQuestions');
+Route::post('storeAnswers', [PretestController::class, 'storeAnswers'])->name('storeAnswers');

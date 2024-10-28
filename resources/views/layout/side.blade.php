@@ -70,7 +70,7 @@
                         @if (Auth::user()->role == 'siswa')
                         <li class="sidebar-title">Siswa</li>
                         <li class="sidebar-item  ">
-                            <a href="form-layout.html" class='sidebar-link'>
+                            <a href="{{ route('pretest') }}" class='sidebar-link'>
                                 <i class="bi-file-text"></i>
                                 <span>Pretest</span>
                             </a>
