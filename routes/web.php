@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\kelolaCoursesController;
 use App\Http\Controllers\guru\kelolaMateriController;
 use App\Http\Controllers\guru\kelolaPostestController;
 use App\Http\Controllers\guru\kelolaPretestController;
+use App\Http\Controllers\guru\penilaianPretestController;
 use App\Http\Controllers\siswa\coursesController;
 use App\Http\Controllers\siswa\pretestController;
 
@@ -51,6 +52,11 @@ Route::post('kelolamateri/store', [kelolaMateriController::class, 'store'])->nam
 Route::get('kelolapretest', [kelolaPretestController::class, 'kelolapretest'])->name('kelolapretest');
 Route::post('kelolapretest/store', [kelolaPretestController::class, 'store'])->name('storepretest');
 Route::delete('kelolapretest/delete/{id}', [kelolaPretestController::class, 'delete'])->name('deletepretest');
+// Penilaian Pretest
+Route::get('penilaianpretest', [penilaianPretestController::class, 'penilaianpretest'])->name('penilaianpretest');
+Route::get('lihatJawaban/{user_id}', [penilaianPretestController::class, 'lihatJawaban'])->name('lihatJawaban');
+Route::post('store-score/{user_id}/{pretest_id}', [PenilaianPretestController::class, 'storeScore'])->name('storeScore');
+
 
 // Route Siswa
 // Courses

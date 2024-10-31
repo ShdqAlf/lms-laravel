@@ -19,13 +19,14 @@ class PretestController extends Controller
 
     public function showPretestQuestions()
     {
+        $courses = Course::all();
         $questions = Pretest::all();
-        return view('siswa.pretest_questions', compact('questions'));
+        return view('siswa.pretest_questions', compact('questions', 'courses'));
     }
 
-    public function storeAnswers(Request $request, $course_id)
+    public function storeAnswers(Request $request)
     {
-        $user_id = Auth::id();
+        $user_id = $request->user_id;
 
         foreach ($request->jawaban as $pretest_id => $jawaban) {
             jawabanPretest::create([
@@ -35,6 +36,6 @@ class PretestController extends Controller
             ]);
         }
 
-        return redirect()->route('dashboard')->with('success', 'Jawaban Anda telah disimpan.');
+        return redirect()->route('pretest')->with('success', 'Jawaban Anda telah disimpan.');
     }
 }
