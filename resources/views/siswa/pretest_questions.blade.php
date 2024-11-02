@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <form action="{{ route('storeAnswers') }}" method="POST">
                                 @csrf
-                                <input type="text" name="user_id" class="form-control" value="{{ Auth::user()->id }}">
+                                <input type="text" name="user_id" class="hidden" value="{{ Auth::user()->id }}">
                                 @foreach($questions as $index => $question)
                                 <div class="mb-4">
                                     <h5>{{ $index + 1 }}. {{ $question->soal_pretest }}</h5>

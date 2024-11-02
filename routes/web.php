@@ -55,8 +55,7 @@ Route::delete('kelolapretest/delete/{id}', [kelolaPretestController::class, 'del
 // Penilaian Pretest
 Route::get('penilaianpretest', [penilaianPretestController::class, 'penilaianpretest'])->name('penilaianpretest');
 Route::get('lihatJawaban/{user_id}', [penilaianPretestController::class, 'lihatJawaban'])->name('lihatJawaban');
-Route::post('store-score/{user_id}/{pretest_id}', [PenilaianPretestController::class, 'storeScore'])->name('storeScore');
-
+Route::post('penilaianpretest/{user_id}/simpan-nilai', [penilaianPretestController::class, 'storeScore'])->name('storeScore');
 
 // Route Siswa
 // Courses

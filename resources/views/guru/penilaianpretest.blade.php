@@ -18,6 +18,17 @@
     </div><!-- End Page Title -->
 
     <div class="page-content">
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
@@ -29,6 +40,7 @@
                                         <th>No.</th>
                                         <th>Nama</th>
                                         <th>Status Pengisian</th>
+                                        <th>Nilai</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -38,6 +50,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $student->nama }}</td>
                                         <td>{{ $student->status_pengisian }}</td>
+                                        <td>{{ $student->nilai }}</td>
                                         <td>
                                             @if($student->status_pengisian == 'Sudah Mengisi')
                                             <!-- Tombol Lihat Jawaban jika sudah mengisi -->

@@ -34,7 +34,7 @@
                                     <a href="{{ route('kelolapretest') }}">Kelola Pretest</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="form-editor-ckeditor.html">Penilaian Pretest</a>
+                                    <a href="{{ route('penilaianpretest') }}">Penilaian Pretest</a>
                                 </li>
                             </ul>
                         </li>

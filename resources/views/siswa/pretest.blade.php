@@ -34,17 +34,19 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <!-- Container Content PPT -->
+                            <!-- Container Content Pretest -->
                             <div id="content-3" class="p-4 bg-white">
                                 <a href="#" onclick="showPretestModal(event)" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
                                     <i class="bi bi-file-earmark-play-fill text-danger me-3" style="font-size: 1.8rem;"></i>
                                     <div>
                                         <p class="m-0 fw-bold">Kerjakan Pretest</p>
-                                        <small class="text-muted">Klik untuk mengerjakan pretest</small>
+                                        <small class="text-muted">
+                                            Kamu {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengerjakan Pretest
+                                        </small>
                                     </div>
                                 </a>
                             </div>
-                            <!-- End of Container Content PPT -->
+                            <!-- End of Container Content Pretest -->
                         </div>
 
                         <!-- Modal -->
@@ -56,11 +58,13 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Apakah kamu ingin memulai pretest?
+                                        {{ $hasSubmitted ? 'Anda sudah mengerjakan pretest dan tidak bisa mengisi kembali.' : 'Apakah kamu ingin memulai pretest?' }}
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                        @if(!$hasSubmitted)
                                         <a href="{{ route('showPretestQuestions') }}" class="btn btn-primary">Mulai Pretest</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

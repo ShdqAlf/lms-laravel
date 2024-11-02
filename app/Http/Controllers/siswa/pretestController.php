@@ -14,7 +14,12 @@ class PretestController extends Controller
     public function pretest()
     {
         $courses = Course::all();
-        return view('siswa.pretest', compact('courses'));
+        $user_id = Auth::id();
+
+        // Check if the user has already answered the pretest questions
+        $hasSubmitted = jawabanPretest::where('user_id', $user_id)->exists();
+
+        return view('siswa.pretest', compact('courses', 'hasSubmitted'));
     }
 
     public function showPretestQuestions()

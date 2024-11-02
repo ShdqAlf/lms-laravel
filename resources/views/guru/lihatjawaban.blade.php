@@ -24,24 +24,23 @@
                     <div class="card">
                         <div class="card-body">
                             <h5>Jawaban Pretest Siswa</h5>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Soal</th>
-                                        <th>Jawaban</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($jawabanPretests as $index => $jawaban)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $jawaban->pretest->soal_pretest }}</td>
-                                        <td>{{ $jawaban->jawaban }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            <form action="{{ route('storeScore', $user_id) }}" method="POST">
+                                @csrf
+                                @foreach($jawabanPretests as $index => $jawaban)
+                                <div class="mb-4">
+                                    <h5>{{ $index + 1 }}. {{ $jawaban->pretest->soal_pretest }}</h5>
+                                    <textarea name="jawaban" rows="4" class="form-control" readonly>{{ $jawaban->jawaban }}</textarea>
+                                    <input type="hidden" name="pretest_id[]" value="{{ $jawaban->pretest->id }}">
+                                </div>
+                                @endforeach
+
+                                <!-- Form to Input Grade and Save Button -->
+                                <div class="d-flex justify-content-end align-items-center mt-4">
+                                    <label for="nilai" class="form-label me-2 mb-0">Masukkan Nilai:</label>
+                                    <input type="number" name="nilai" id="nilai" class="form-control col-md-2 me-2" placeholder="Nilai" style="width: 80px;">
+                                    <button type="submit" class="btn btn-primary">Simpan Nilai</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
