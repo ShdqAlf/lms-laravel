@@ -41,10 +41,10 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $student->nama }}</td>
                                         <td>{{ $student->nomor_id }}</td>
-                                        <td>{{ $student->nilai }}</td>
-                                        <th>-</th>
-                                        <th>-</th>
-                                        <th>70</th>
+                                        <td>{{ $student->nilaiPretest }}</td> <!-- Pretest score -->
+                                        <th>-</th> <!-- Assuming this is for LKPD, update if necessary -->
+                                        <td>{{ $student->nilaiPostest }}</td> <!-- Postest score -->
+                                        <th>70</th> <!-- Assuming this is a fixed average or needs to be calculated -->
                                     </tr>
                                     @endforeach
                                 </tbody>
