@@ -38,11 +38,19 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('kelolamateri') }}" class='sidebar-link'>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book-half"></i>
-                                <span>Kelola Materi</span>
+                                <span>Materi</span>
                             </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{{ route('kelolamateri') }}">Kelola Materi</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="#">Penilaian LKPD</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
@@ -51,15 +59,15 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="">Kelola Postest</a>
+                                    <a href="{{ route('kelolapostest') }}">Kelola Postest</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="form-editor-ckeditor.html">Penilaian Postest</a>
+                                    <a href="{{ route('penilaianpostest') }}">Penilaian Postest</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('leaderboard') }}" class='sidebar-link'>
                                 <i class="bi bi-award"></i>
                                 <span>Leaderboard</span>
                             </a>
@@ -90,7 +98,7 @@
                             </ul>
                         </li>
                         <li class="sidebar-item  ">
-                            <a href="form-layout.html" class='sidebar-link'>
+                            <a href="{{ route('postest') }}" class='sidebar-link'>
                                 <i class="bi-file-text-fill"></i>
                                 <span>Postest</span>
                             </a>
