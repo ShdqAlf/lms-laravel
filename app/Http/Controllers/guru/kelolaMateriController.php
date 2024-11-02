@@ -23,7 +23,10 @@ class kelolaMateriController extends Controller
         $lkpd = Lkpd::where('course_id', $course_id)->first();
         $silabus = Silabus::where('course_id', $course_id)->first();
 
-        return view('guru.kelolamateri', compact('modul', 'ppt', 'lkpd', 'silabus'));
+        // Ambil Semua Courses
+        $courses = Course::all();
+
+        return view('guru.kelolamateri', compact('modul', 'ppt', 'lkpd', 'silabus', 'courses'));
     }
 
     public function store(Request $request)

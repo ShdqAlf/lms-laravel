@@ -16,7 +16,60 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
+    <style>
+        /* Mengatur tampilan dropdown button */
+        #dropdownHoverButton {
+            width: 100%;
+            background-color: #4a5568;
+            /* Warna button lebih tua */
+            color: #ffffff;
+            padding: 10px 16px;
+            text-align: left;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
 
+        #dropdownHoverButton:hover {
+            background-color: #2d3748;
+            /* Warna hover yang lebih tua */
+        }
+
+        /* Mengatur tampilan dropdown menu */
+        #dropdownHover {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            background-color: #ffffff;
+            margin-top: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mengatur padding dan gaya untuk item di dropdown */
+        #dropdownHover ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #dropdownHover ul li a {
+            display: block;
+            padding: 10px 16px;
+            color: #4a5568;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        #dropdownHover ul li a:hover {
+            background-color: #edf2f7;
+            /* Warna hover */
+            color: #2d3748;
+        }
+    </style>
     <div class="page-content">
         <section class="section">
             <div class="row">
@@ -24,6 +77,25 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="w-full">
+                                <div class="relative-container">
+                                    <!-- Dropdown button -->
+                                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" type="button">
+                                        Pilih Course
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+
+                                    <!-- Dropdown menu -->
+                                    <div id="dropdownHover" class="hidden">
+                                        <ul>
+                                            @foreach($courses as $courses)
+                                            <li><a href="{{ $courses->id }}">{{ $courses->course }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+
                                 <form method="POST" action="{{ route('storekelolamateri') }}" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="course_id" value="{{ Auth::user()->course->id }}">
@@ -133,6 +205,21 @@
             icon.style.transform = "rotate(0deg)"; // Rotate back up
         }
     }
+
+    document.getElementById('dropdownHoverButton').addEventListener('click', function() {
+        const dropdown = document.getElementById('dropdownHover');
+        dropdown.classList.toggle('hidden'); // Toggle hidden class
+    });
+
+    // Optional: Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('dropdownHover');
+        const button = document.getElementById('dropdownHoverButton');
+
+        if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
 </script>
 @include('layout/foot')
 </div>
