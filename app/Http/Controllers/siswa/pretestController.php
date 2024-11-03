@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Pretest;
 use App\Models\jawabanPretest;
+use App\Models\NilaiPretest;
 use Auth;
 
 class PretestController extends Controller
@@ -19,7 +20,10 @@ class PretestController extends Controller
         // Check if the user has already answered the pretest questions
         $hasSubmitted = jawabanPretest::where('user_id', $user_id)->exists();
 
-        return view('siswa.pretest', compact('courses', 'hasSubmitted'));
+        // Retrieve the score if it exists
+        $score = NilaiPretest::where('user_id', $user_id)->first();
+
+        return view('siswa.pretest', compact('courses', 'hasSubmitted', 'score'));
     }
 
     public function showPretestQuestions()

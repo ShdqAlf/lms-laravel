@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Postest;
 use App\Models\jawabanPostest;
+use App\Models\NilaiPostest;
 use Auth;
 
 class PostestController extends Controller
@@ -19,7 +20,10 @@ class PostestController extends Controller
         // Check if the user has already answered the postest questions
         $hasSubmitted = jawabanPostest::where('user_id', $user_id)->exists();
 
-        return view('siswa.postest', compact('courses', 'hasSubmitted'));
+        // Retrieve the score if it exists
+        $score = NilaiPostest::where('user_id', $user_id)->first();
+
+        return view('siswa.postest', compact('courses', 'hasSubmitted', 'score'));
     }
 
     public function showpostestQuestions()
