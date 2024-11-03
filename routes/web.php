@@ -50,8 +50,10 @@ Route::delete('kelolacourses/delete/{id}', [kelolaCoursesController::class, 'del
 
 // Route Guru
 // Kelola Materi
-Route::get('kelolamateri', [kelolaMateriController::class, 'kelolamateri'])->name('kelolamateri');
+Route::get('kelolamateri', [kelolaMateriController::class, 'kelolaMateri'])->name('kelolamateri');
+Route::get('kelolamateri/{course_id}', [kelolaMateriController::class, 'showKelolaMateri'])->name('showkelolamateri');
 Route::post('kelolamateri/store', [kelolaMateriController::class, 'store'])->name('storekelolamateri');
+
 // Kelola Pretest
 Route::get('kelolapretest', [kelolaPretestController::class, 'kelolapretest'])->name('kelolapretest');
 Route::post('kelolapretest/store', [kelolaPretestController::class, 'store'])->name('storepretest');

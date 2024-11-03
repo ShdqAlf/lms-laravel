@@ -12,26 +12,41 @@ use App\Models\Silabus;
 
 class kelolaMateriController extends Controller
 {
-    public function kelolamateri()
+    public function kelolaMateri()
     {
-        // Dapatkan ID course berdasarkan user yang sedang login
-        $course_id = auth()->user()->course->id;
+        // Ambil semua course untuk ditampilkan di dropdown
+        $courses = Course::all();
 
-        // Ambil data Modul, PPT, dan LKPD untuk course yang sedang login
+        // Tampilkan halaman pemilihan course
+        return view('guru.pilihCourse', compact('courses'));
+    }
+
+    public function showKelolaMateri($course_id)
+    {
+        // Ambil data Modul, PPT, LKPD, dan Silabus berdasarkan course yang dipilih
         $modul = Modul::where('course_id', $course_id)->first();
         $ppt = Ppt::where('course_id', $course_id)->first();
         $lkpd = Lkpd::where('course_id', $course_id)->first();
         $silabus = Silabus::where('course_id', $course_id)->first();
 
-        // Ambil Semua Courses
-        $courses = Course::all();
+        // Ambil data course yang dipilih
+        $course = Course::findOrFail($course_id);
 
-        return view('guru.kelolamateri', compact('modul', 'ppt', 'lkpd', 'silabus', 'courses'));
+        return view('guru.kelolamateri', compact('modul', 'ppt', 'lkpd', 'silabus', 'course'));
     }
 
     public function store(Request $request)
     {
         $course_id = $request->course_id;
+
+
+        // Update atau Tambahkan Silabus
+        Silabus::updateOrCreate(
+            ['course_id' => $course_id],  // Kondisi untuk update
+            [
+                'deskripsi_silabus' => $request->deskripsi_silabus,
+            ]
+        );
 
         // Update atau Tambahkan Modul
         if ($request->hasFile('pdf_modul')) {
@@ -66,14 +81,6 @@ class kelolaMateriController extends Controller
             );
         }
 
-        // Update atau Tambahkan silabus
-        Silabus::updateOrCreate(
-            ['course_id' => $course_id],  // Kondisi untuk update
-            [
-                'deskripsi_silabus' => $request->deskripsi_silabus,
-            ]
-        );
-
-        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        return redirect()->route('kelolamateri')->with('success', 'Data berhasil disimpan!');
     }
 }

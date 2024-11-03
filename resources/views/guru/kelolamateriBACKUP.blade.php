@@ -12,7 +12,7 @@
         <h1>Kelola Materi</h1> <!-- Menampilkan nama user -->
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Kelola Materi {{ $course->course }}</li> <!-- Menampilkan role user -->
+                <li class="breadcrumb-item active">Kelola Materi {{ Auth::user()->course->course }}</li> <!-- Menampilkan role user -->
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -77,10 +77,28 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="w-full">
-                                <h2>Kelola Materi {{ $course->course }}</h2>
+                                <div class="relative-container">
+                                    <!-- Dropdown button -->
+                                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" type="button">
+                                        Pilih Course
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+
+                                    <!-- Dropdown menu -->
+                                    <div id="dropdownHover" class="hidden">
+                                        <ul>
+                                            @foreach($courses as $courses)
+                                            <li><a href="{{ $courses->id }}">{{ $courses->course }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+
                                 <form method="POST" action="{{ route('storekelolamateri') }}" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="course_id" value="{{ $course->id }}">
+                                    <input type="hidden" name="course_id" value="{{ Auth::user()->course->id }}">
                                     <div class="form-group mb-3">
                                         <label for="deskripsi_silabus" class="form-label">Masukkan Deskripsi Silabus</label>
                                         <textarea class="form-control" id="deskripsi_silabus" name="deskripsi_silabus" rows="3" required>{{ old('deskripsi_silabus', $silabus->deskripsi_silabus ?? '') }}</textarea>

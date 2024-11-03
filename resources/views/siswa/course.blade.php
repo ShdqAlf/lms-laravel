@@ -52,6 +52,31 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <!-- Pembelajaran Interaktif Section -->
+                            <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
+                                <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
+                                    onclick="toggleAccordion(3)">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">Pembelajaran Interaktif {{ $course->course }}</span>
+                                        <i class="bi bi-chevron-down" id="icon-3"></i>
+                                    </div>
+                                </button>
+                                <div id="content-3" class="p-4 bg-white border-top d-none">
+                                    @if($ppt)
+                                    <a href="{{ route('showPpt', $ppt->id) }}" target="_blank" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
+                                        <i class="bi bi-file-earmark-play-fill text-danger me-3" style="font-size: 1.8rem;"></i>
+                                        <div>
+                                            <p class="m-0 fw-bold">{{ $ppt->judul_ppt }}</p>
+                                            <small class="text-muted">Klik untuk melihat Pembelajaran Interaktif</small>
+                                        </div>
+                                    </a>
+                                    @else
+                                    <p>Belum ada Pembelajaran yang tersedia.</p>
+                                    @endif
+                                </div>
+                            </div>
+
                             <!-- LKPD Section -->
                             <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
                                 <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
@@ -76,27 +101,21 @@
                                 </div>
                             </div>
 
-                            <!-- PPT Section -->
+                            <!-- Pengumpulan LKPD Section -->
                             <div class="border border-gray-300 mb-3 rounded-lg shadow-sm">
                                 <button type="button" class="w-full px-4 py-3 text-left text-gray-700 bg-light border-0 rounded-top"
-                                    onclick="toggleAccordion(3)">
+                                    onclick="toggleAccordion(4)">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold">PPT {{ $course->course }}</span>
-                                        <i class="bi bi-chevron-down" id="icon-3"></i>
+                                        <span class="fw-bold">Pengumpulan LKPD {{ $course->course }}</span>
+                                        <i class="bi bi-chevron-down" id="icon-4"></i> <!-- Ubah ke icon-4 -->
                                     </div>
                                 </button>
-                                <div id="content-3" class="p-4 bg-white border-top d-none">
-                                    @if($ppt)
-                                    <a href="{{ route('showPpt', $ppt->id) }}" target="_blank" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
-                                        <i class="bi bi-file-earmark-play-fill text-danger me-3" style="font-size: 1.8rem;"></i>
-                                        <div>
-                                            <p class="m-0 fw-bold">{{ $ppt->judul_ppt }}</p>
-                                            <small class="text-muted">Klik untuk melihat PPT</small>
-                                        </div>
-                                    </a>
-                                    @else
-                                    <p>Belum ada PPT yang tersedia.</p>
-                                    @endif
+                                <div id="content-4" class="p-4 bg-white border-top d-none"> <!-- Ubah ke content-4 -->
+                                    <div class="mb-3">
+                                        <label for="pdf_modul" class="form-label">Tambahkan file Pengumpulan LKPD</label>
+                                        <input class="form-control" type="file" id="pdf_modul" name="pdf_modul">
+                                        <p>Status Pengumpulan: Sudah/Belum <a href="{{ asset('storage/' . $modul->pdf_modul) }}" target="_blank">Klik untuk melihat file</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

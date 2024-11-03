@@ -18,6 +18,17 @@
     </div><!-- End Page Title -->
 
     <div class="page-content">
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
