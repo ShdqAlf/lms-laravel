@@ -29,7 +29,7 @@
                                 @foreach($questions as $index => $question)
                                 <div class="mb-4">
                                     <h5>{{ $index + 1 }}. {{ $question->soal_pretest }}</h5>
-                                    <textarea name="jawaban[{{ $question->id }}]" class="form-control" placeholder="Masukkan jawaban Anda"></textarea>
+                                    <textarea name="jawaban[{{ $question->id }}]" class="form-control" placeholder="Masukkan jawaban Anda" required></textarea>
                                 </div>
                                 @endforeach
                                 <!-- Button to trigger modal -->

@@ -78,6 +78,8 @@ Route::get('course/{id}', [coursesController::class, 'course'])->name('course');
 Route::get('modul/{id}', [coursesController::class, 'showModul'])->name('showModul');
 Route::get('ppt/{id}', [coursesController::class, 'showPpt'])->name('showPpt');
 Route::get('lkpd/{id}', [coursesController::class, 'showLkpd'])->name('showLkpd');
+Route::get('pengumpulanlkpd/{id}', [coursesController::class, 'pengumpulanLkpd'])->name('pengumpulanLkpd');
+Route::post('storePengumpulanLkpd', [coursesController::class, 'storePengumpulanLkpd'])->name('storePengumpulanLkpd');
 
 // Pretest
 Route::get('pretest', [pretestController::class, 'pretest'])->name('pretest');
@@ -87,4 +89,4 @@ Route::post('storeAnswers', [PretestController::class, 'storeAnswers'])->name('s
 // postest
 Route::get('postest', [PostestController::class, 'postest'])->name('postest');
 Route::get('showpostestquestion', [PostestController::class, 'showpostestQuestions'])->name('showpostestQuestions');
-Route::post('storeAnswers', [PostestController::class, 'storeAnswers'])->name('storeAnswers');
+Route::post('storeAnswersPostest', [PostestController::class, 'storeAnswers'])->name('storeAnswersPostest');
