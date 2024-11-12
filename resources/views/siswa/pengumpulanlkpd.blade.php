@@ -25,11 +25,16 @@
                         <div class="card-body">
                             <form action="{{ route('storePengumpulanLkpd') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="text" name="course_id" value="{{ $course->id }}">
+                                <input type="hidden" name="course_id" value="{{ $course->id }}">
                                 <div class="mb-3">
                                     <label for="pdf_pengumpulanLkpd" class="form-label">Tambahkan file Pengumpulan LKPD</label>
                                     <input class="form-control" type="file" id="pdf_pengumpulanLkpd" name="pdf_pengumpulanLkpd">
-                                    <p>Status Pengumpulan: {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengumpulkan <a href="" target="_blank">{{ $hasSubmitted ? '. Klik untuk melihat file' : '' }}</a></p>
+                                    <p>Status Pengumpulan: {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengumpulkan.
+                                        <!-- Tambahkan link download jika sudah mengumpulkan -->
+                                        @if($hasSubmitted)
+                                        <a href="{{ asset('storage/' . $filePath) }}" target="_blank"> Klik untuk mendownload file</a>
+                                        @endif
+                                    </p>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center mt-4">
                                     <button type="submit" class="btn btn-primary">Simpan Jawaban</button>

@@ -48,7 +48,7 @@
                                     <a href="{{ route('kelolamateri') }}">Kelola Materi</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="#">Penilaian LKPD</a>
+                                    <a href="{{ route('penilaianlkpd') }}">Penilaian LKPD</a>
                                 </li>
                             </ul>
                         </li>

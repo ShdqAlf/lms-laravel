@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\kelolaCoursesController;
 use App\Http\Controllers\guru\kelolaMateriController;
 use App\Http\Controllers\guru\kelolaPostestController;
 use App\Http\Controllers\guru\kelolaPretestController;
+use App\Http\Controllers\guru\penilaianLkpdController;
 use App\Http\Controllers\guru\penilaianPretestController;
 use App\Http\Controllers\guru\penilaianPostestController;
 use App\Http\Controllers\siswa\coursesController;
@@ -53,7 +54,10 @@ Route::delete('kelolacourses/delete/{id}', [kelolaCoursesController::class, 'del
 Route::get('kelolamateri', [kelolaMateriController::class, 'kelolaMateri'])->name('kelolamateri');
 Route::get('kelolamateri/{course_id}', [kelolaMateriController::class, 'showKelolaMateri'])->name('showkelolamateri');
 Route::post('kelolamateri/store', [kelolaMateriController::class, 'store'])->name('storekelolamateri');
-
+// Penilaian LKPD
+Route::get('penilaianlkpd', [penilaianLkpdController::class, 'pilihLkpd'])->name('penilaianlkpd');
+Route::get('penilaianlkpd/{course_id}', [penilaianLkpdController::class, 'penilaianLkpd'])->name('pilihLkpd');
+Route::post('penilaianlkpd/simpan', [penilaianLkpdController::class, 'simpanNilai'])->name('simpanNilaiLkpd');
 // Kelola Pretest
 Route::get('kelolapretest', [kelolaPretestController::class, 'kelolapretest'])->name('kelolapretest');
 Route::post('kelolapretest/store', [kelolaPretestController::class, 'store'])->name('storepretest');

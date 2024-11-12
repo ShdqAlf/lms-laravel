@@ -61,16 +61,19 @@ class coursesController extends Controller
         $course = Course::findOrFail($id);
         $lkpd = Lkpd::findOrFail($id);
 
-        // Check if the user has already answered the postest questions
-        $hasSubmitted = pengumpulanLkpd::where('user_id', $user_id)->where('course_id', $id)->exists();
-        return view('siswa.pengumpulanLkpd', compact('courses', 'course', 'lkpd', 'hasSubmitted'));
+        // Periksa apakah pengguna sudah mengumpulkan LKPD
+        $pengumpulan = pengumpulanLkpd::where('user_id', $user_id)->where('course_id', $id)->first();
+        $hasSubmitted = $pengumpulan ? true : false;
+        $filePath = $hasSubmitted ? $pengumpulan->file_jawaban : null;
+
+        return view('siswa.pengumpulanLkpd', compact('courses', 'course', 'lkpd', 'hasSubmitted', 'filePath'));
     }
 
     public function storePengumpulanLkpd(Request $request)
     {
         $request->validate([
             'course_id' => 'required|exists:courses,id',
-            'pdf_pengumpulanLkpd' => 'required|file|mimes:pdf|max:2048',
+            'pdf_pengumpulanLkpd' => 'required|file|max:2048',
         ]);
 
         $course_id = $request->course_id;

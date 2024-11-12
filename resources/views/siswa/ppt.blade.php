@@ -1,39 +1,38 @@
-@include('layout/head')
-@include('layout/side')
+<!DOCTYPE html>
+<html lang="id">
 
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Membuat container untuk iframe */
+        .ppt-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* Mengatur tinggi container sesuai dengan tinggi viewport */
+            overflow: hidden;
+        }
 
-    <div class="pagetitle">
-        <h1>Mata Pelajaran {{ $course->course }}</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Modul, materi, dan LKPD dari mata pelajaran {{ $course->course }}</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
+        /* Mengatur iframe agar memenuhi container */
+        .ppt-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
 
+<body>
 
-    <div class="page-content">
-        <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="container mt-5">
-                                <h3>{{ $ppt->judul_ppt }}</h3>
-                                <iframe src="{{ $ppt->link_ppt }}" width="100%" height="600px" frameborder="0"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="ppt-container">
+        <iframe src="{{ $ppt->link_ppt }}" frameborder="0" allowfullscreen="true"></iframe>
     </div>
 
-    @include('layout/foot')
-</div>
+</body>
+
+</html>
