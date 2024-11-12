@@ -30,7 +30,9 @@
                                         <th>Nama Siswa</th>
                                         <th>NIS</th>
                                         <th>Nilai Pretest</th>
-                                        <th>Nilai LKPD</th>
+                                        @foreach ($courses as $course)
+                                        <th>Nilai {{ $course->course }}</th>
+                                        @endforeach
                                         <th>Nilai Postest</th>
                                         <th>Rata-Rata</th>
                                     </tr>
@@ -41,10 +43,12 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $student->nama }}</td>
                                         <td>{{ $student->nomor_id }}</td>
-                                        <td>{{ $student->nilaiPretest }}</td> <!-- Pretest score -->
-                                        <th>-</th> <!-- Assuming this is for LKPD, update if necessary -->
-                                        <td>{{ $student->nilaiPostest }}</td> <!-- Postest score -->
-                                        <th>70</th> <!-- Assuming this is a fixed average or needs to be calculated -->
+                                        <td>{{ $student->nilaiPretest }}</td>
+                                        @foreach ($courses as $course)
+                                        <td>{{ $student->nilaiLkpdArray[$course->id] ?? '-' }}</td>
+                                        @endforeach
+                                        <td>{{ $student->nilaiPostest }}</td>
+                                        <td>{{ round($student->averageScore, 2) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

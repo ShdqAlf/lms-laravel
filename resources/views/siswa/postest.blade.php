@@ -41,7 +41,7 @@
                                     <div>
                                         <p class="m-0 fw-bold">Kerjakan postest</p>
                                         <small class="text-muted">
-                                            Kamu {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengerjakan Pretest. {{ $hasSubmitted ? 'Nilai Kamu: ': '' }} {{ $score ? $score->score : '' }}
+                                            Kamu {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengerjakan Postest. {{ $hasSubmitted ? 'Nilai Kamu: ': '' }} {{ $score ? $score->score : '' }}
                                         </small>
                                     </div>
                                 </a>
