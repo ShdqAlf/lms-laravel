@@ -25,7 +25,7 @@ class dashboardController extends Controller
         if ($user->role === 'guru') {
             $events = $eventsQuery->get()->map(function ($event) {
                 // Assign color based on the user's role
-                $event->color = $event->user->role === 'guru' ? 'blue' : 'yellow';
+                $event->color = $event->user->role === 'guru' ? 'blue' : 'green';
                 return $event;
             })->toArray();
         } else {
