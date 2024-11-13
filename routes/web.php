@@ -31,6 +31,8 @@ use App\Http\Controllers\siswa\PostestController;
 // Route General
 Route::get('/', [authController::class, 'login'])->name('login');
 Route::get('dashboard', [dashboardController::class, 'dashboard'])->name('dashboard');
+Route::post('store-event', [dashboardController::class, 'storeEvent'])->name('storeEvent');
+
 Route::post('login', [authController::class, 'authenticate'])->name('authenticate');
 Route::get('logout', [authController::class, 'logout'])->name('logout');
 Route::get('leaderboard', [leaderboardController::class, 'leaderboard'])->name('leaderboard');
