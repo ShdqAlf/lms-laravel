@@ -48,6 +48,9 @@ class leaderboardController extends Controller
             return $student;
         });
 
+        // Urutkan siswa berdasarkan nilai rata-rata dari yang terbesar hingga yang terkecil
+        $students = $students->sortByDesc('averageScore')->values();
+
         return view('leaderboard.leaderboard', compact('students', 'courses'));
     }
 }

@@ -124,7 +124,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p><strong>Nama:</strong> {{ $student->nama }}</p>
-                                    <p><strong>Nomor ID:</strong> {{ $student->nomor_id }}</p>
+                                    <p><strong>NIS:</strong> {{ $student->nomor_id }}</p>
 
                                     <table class="table">
                                         <thead>
