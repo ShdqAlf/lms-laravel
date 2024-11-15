@@ -104,7 +104,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item  ">
-                            <a href="form-layout.html" class='sidebar-link'>
+                            <a href="{{ route('leaderboard') }}" class='sidebar-link'>
                                 <i class="bi bi-award"></i>
                                 <span>Leaderboard</span>
                             </a>

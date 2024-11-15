@@ -23,12 +23,156 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <!-- Heading to guide user -->
-                            <h5 class="text-center mb-3">Klik pada kalender untuk melihat atau menambah kegiatan</h5>
+                            {{-- Menu untuk Guru --}}
+                            @if (Auth::user()->role == 'guru')
+                            <div class="row">
+                                <!-- Jumlah Siswa yang belum mengumpulkan penugasan -->
+                                <div class="col-12 col-lg-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-primary text-white">
+                                            <h5 class="mb-0">Jumlah Penugasan Belum Terkumpul</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-borderless table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Penugasan</th>
+                                                        <th class="text-end">Jumlah</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Pretest</td>
+                                                        <td class="text-end">{{ $jumlahBelumPretest }} Siswa</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Postest</td>
+                                                        <td class="text-end">{{ $jumlahBelumPostest }} Siswa</td>
+                                                    </tr>
+                                                    @foreach ($courses as $course)
+                                                    <tr>
+                                                        <td>LKPD {{ $course->course }}</td>
+                                                        <td class="text-end">{{ $jumlahBelumLkpd[$course->id] }} Siswa</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <!-- Calendar Container -->
-                            <div id="calendar-container" class="mb-3">
-                                <div id="calendar"></div>
+                                <!-- Tabel Status Pengumpulan Penugasan Siswa -->
+                                <div class="col-12 col-lg-8">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header bg-primary text-white">
+                                            <h5 class="mb-0">Tabel Status Pengumpulan Penugasan Siswa</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="datatable" class="table table-bordered table-striped table-hover mb-0">
+                                                    <thead class="table-light text-center">
+                                                        <tr>
+                                                            <th style="width: 5%;">No</th>
+                                                            <th style="width: 25%;">Nama Siswa</th>
+                                                            <th style="width: 15%;">NIS</th>
+                                                            <th style="width: 15%;">Pretest</th>
+                                                            @foreach ($courses as $course)
+                                                            <th style="width: 20%;">{{ $course->course }}</th>
+                                                            @endforeach
+                                                            <th style="width: 15%;">Postest</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="text-center">
+                                                        @foreach($students as $index => $student)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $student->nama }}</td>
+                                                            <td>{{ $student->nomor_id }}</td>
+
+                                                            <!-- Status Pretest -->
+                                                            <td class="{{ $student->status_pengisian_pretest === 'Sudah Mengisi' ? 'text-success' : 'text-danger' }}">
+                                                                {{ $student->status_pengisian_pretest }}
+                                                            </td>
+
+                                                            <!-- Status LKPD untuk setiap course -->
+                                                            @foreach ($courses as $course)
+                                                            <td class="{{ ($student->status_pengisian_lkpd[$course->id] ?? 'Belum Mengisi') === 'Sudah Mengisi' ? 'text-success' : 'text-danger' }}">
+                                                                {{ $student->status_pengisian_lkpd[$course->id] ?? 'Belum Mengisi' }}
+                                                            </td>
+                                                            @endforeach
+
+                                                            <!-- Status Postest -->
+                                                            <td class="{{ $student->status_pengisian_postest === 'Sudah Mengisi' ? 'text-success' : 'text-danger' }}">
+                                                                {{ $student->status_pengisian_postest }}
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @endif
+
+                            @if (Auth::user()->role == 'siswa')
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Kartu Nilai Siswa</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Nama:</strong> {{ $student->nama }}</p>
+                                    <p><strong>Nomor ID:</strong> {{ $student->nomor_id }}</p>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Jenis Penugasan</th>
+                                                <th>Nilai</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Nilai Pretest -->
+                                            <tr>
+                                                <td>Pretest</td>
+                                                <td>{{ $student->nilai_pretest }}</td>
+                                            </tr>
+
+                                            <!-- Nilai LKPD -->
+                                            @foreach ($courses as $course)
+                                            <tr>
+                                                <td>LKPD {{ $course->course }}</td>
+                                                <td>{{ $student->nilai_lkpd[$course->id] }}</td>
+                                            </tr>
+                                            @endforeach
+
+                                            <!-- Nilai Postest -->
+                                            <tr>
+                                                <td>Postest</td>
+                                                <td>{{ $student->nilai_postest }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="text-center mb-3">Klik pada kalender untuk melihat atau menambah kegiatan</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- Calendar Container -->
+                                            <div id="calendar-container" class="mb-3">
+                                                <div id="calendar"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Add Event Modal -->
@@ -97,7 +241,26 @@
 <!-- Optionally include Bootstrap integration styles -->
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/bootstrap/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.global.min.js'></script>
+
+<!-- Include jQuery and DataTables JS and CSS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/fixedheader/3.1.7/css/fixedHeader.dataTables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+
 <script>
+    $(document).ready(function() {
+        // Initialize DataTable with scroll and fixed header options
+        $('#datatable').DataTable({
+            "scrollY": "300px", // Enable vertical scrolling
+            "scrollCollapse": true, // Allow the table to collapse with scrolling
+            "paging": true, // Enable paging
+            "fixedHeader": true // Fix the header to stay at the top while scrolling
+        });
+    });
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
         const events = @json($events); // Load existing events from backend

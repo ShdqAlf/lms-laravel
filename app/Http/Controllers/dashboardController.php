@@ -3,7 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use App\Models\JadwalKegiatan;
+use App\Models\JawabanPretest;
+use App\Models\JawabanPostest;
+use App\Models\pengumpulanLkpd;
+use App\Models\NilaiPretest;
+use App\Models\NilaiPostest;
+use App\Models\nilaiLkpd;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -15,6 +22,71 @@ class dashboardController extends Controller
         $courses = Course::all();
         $user = auth()->user();
 
+        // Ambil data siswa
+        $student = $user;
+
+        // Pretest status dan nilai
+        $pretestScore = NilaiPretest::where('user_id', $student->id)->value('score');
+        $student->nilai_pretest = $pretestScore ?? ($this->hasSubmittedPretest($student->id) ? 'dalam penilaian' : 'belum mengisi');
+
+        // Postest status dan nilai
+        $postestScore = NilaiPostest::where('user_id', $student->id)->value('score');
+        $student->nilai_postest = $postestScore ?? ($this->hasSubmittedPostest($student->id) ? 'dalam penilaian' : 'belum mengisi');
+
+        // LKPD status dan nilai
+        $nilaiLkpd = [];
+        foreach ($courses as $course) {
+            $score = nilaiLkpd::where('user_id', $student->id)
+                ->where('lkpd_id', $course->id)
+                ->value('score');
+
+            $status = $this->hasSubmittedLkpd($student->id, $course->id)
+                ? ($score ?? 'dalam penilaian')
+                : 'belum mengisi';
+            $nilaiLkpd[$course->id] = $status;
+        }
+        $student->nilai_lkpd = $nilaiLkpd;
+
+        // Mengambil semua data siswa
+        $students = User::where('role', 'siswa')->get();
+
+        $students = $students->map(function ($student) use ($courses) {
+            $answeredPretest = JawabanPretest::where('user_id', $student->id)->exists();
+            $student->status_pengisian_pretest = $answeredPretest ? 'Sudah Mengisi' : 'Belum Mengisi';
+
+            $answeredPostest = JawabanPostest::where('user_id', $student->id)->exists();
+            $student->status_pengisian_postest = $answeredPostest ? 'Sudah Mengisi' : 'Belum Mengisi';
+
+            // Variabel sementara untuk menyimpan status pengisian tiap course
+            $statusLkpd = [];
+
+            foreach ($courses as $course) {
+                $answeredLkpd = pengumpulanLkpd::where('user_id', $student->id)
+                    ->where('course_id', $course->id)
+                    ->exists();
+                $statusLkpd[$course->id] = $answeredLkpd ? 'Sudah Mengisi' : 'Belum Mengisi';
+            }
+
+            // Menyimpan status LKPD sebagai atribut tambahan pada objek $student
+            $student->status_pengisian_lkpd = $statusLkpd;
+
+            return $student;
+        });
+
+        // Menghitung jumlah siswa yang belum mengumpulkan pretest
+        $jumlahBelumPretest = $students->where('status_pengisian_pretest', 'Belum Mengisi')->count();
+
+        // Menghitung jumlah siswa yang belum mengumpulkan postest
+        $jumlahBelumPostest = $students->where('status_pengisian_postest', 'Belum Mengisi')->count();
+
+        // Menghitung jumlah siswa yang belum mengumpulkan LKPD untuk setiap course
+        $jumlahBelumLkpd = [];
+        foreach ($courses as $course) {
+            $jumlahBelumLkpd[$course->id] = $students->filter(function ($student) use ($course) {
+                return $student->status_pengisian_lkpd[$course->id] === 'Belum Mengisi';
+            })->count();
+        }
+
         // Modify query to include the user's name and role
         $eventsQuery = JadwalKegiatan::select(
             'deskripsi_kegiatan as title',
@@ -24,7 +96,6 @@ class dashboardController extends Controller
 
         if ($user->role === 'guru') {
             $events = $eventsQuery->get()->map(function ($event) {
-                // Assign color based on the user's role
                 $event->color = $event->user->role === 'guru' ? 'blue' : 'green';
                 return $event;
             })->toArray();
@@ -35,16 +106,30 @@ class dashboardController extends Controller
                         $query->where('role', 'guru');
                     });
             })->get()->map(function ($event) {
-                // Assign color based on the user's role
                 $event->color = $event->user->role === 'guru' ? 'blue' : 'green';
                 return $event;
             })->toArray();
         }
 
-        return view('dashboard.dashboard', compact('courses', 'events'));
+        return view('dashboard.dashboard', compact('courses', 'events', 'students', 'jumlahBelumPretest', 'jumlahBelumPostest', 'jumlahBelumLkpd', 'student'));
     }
 
+    private function hasSubmittedPretest($userId)
+    {
+        return JawabanPretest::where('user_id', $userId)->exists();
+    }
 
+    private function hasSubmittedPostest($userId)
+    {
+        return JawabanPostest::where('user_id', $userId)->exists();
+    }
+
+    private function hasSubmittedLkpd($userId, $courseId)
+    {
+        return pengumpulanLkpd::where('user_id', $userId)
+            ->where('course_id', $courseId)
+            ->exists();
+    }
 
     public function storeEvent(Request $request)
     {
