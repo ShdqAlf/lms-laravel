@@ -35,7 +35,7 @@
                     <div class="card">
                         <div class="card-body">
                             @if($silabus)
-                            {{ $silabus->deskripsi_silabus }}
+                            <p>{!! nl2br(e($silabus->deskripsi_silabus)) !!}</p>
                             @else
                             <p>Belum ada Silabus.</p>
                             @endif
