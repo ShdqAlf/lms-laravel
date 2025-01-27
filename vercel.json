@@ -8,7 +8,7 @@
     },
     "routes": [{ "src": "/(.*)", "dest": "/api/index.php" }],
     "public": true,
-    "buildCommand": "vite build",
+    "buildCommand": "apt-get update && apt-get install -y libssl1.0-dev && vite build",
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
