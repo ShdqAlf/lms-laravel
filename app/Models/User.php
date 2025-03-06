@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(jawabanLkpdKelompok::class, 'user_id');
     }
+
+    public function nilaiLkpdKelompok()
+    {
+        return $this->hasOne(nilaiLkpdKelompok::class, 'user_id');
+    }
 }

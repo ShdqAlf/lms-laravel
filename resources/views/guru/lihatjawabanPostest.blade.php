@@ -30,6 +30,7 @@
                                 <div class="mb-4">
                                     <h5>{{ $index + 1 }}. {{ $jawaban->postest->soal_postest }}</h5>
                                     <textarea name="jawaban" rows="4" class="form-control" readonly>{{ $jawaban->jawaban }}</textarea>
+                                    <img src="{{ asset('storage/' . $jawaban->gambar_jawaban) }}" alt="Jawaban Gambar">
                                     <input type="hidden" name="postest_id[]" value="{{ $jawaban->postest->id }}">
                                 </div>
                                 @endforeach

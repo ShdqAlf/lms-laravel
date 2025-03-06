@@ -15,6 +15,7 @@ class jawabanLkpdKelompok extends Model
         'lkpd_kelompok_id',
         'user_id',
         'jawaban',
+        'gambar_jawaban'
     ];
 
     // Relasi dengan model postest

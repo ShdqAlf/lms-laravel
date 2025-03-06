@@ -5,23 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JawabanPostest extends Model
+class jawabanPostestPg extends Model
 {
     use HasFactory;
 
-    protected $table = 'jawaban_postest';
+    protected $table = 'jawaban_postest_pg';
 
     protected $fillable = [
-        'postest_id',
+        'postest_pg_id',
         'user_id',
         'jawaban',
-        'gambar_jawaban'
     ];
 
     // Relasi dengan model postest
     public function postest()
     {
-        return $this->belongsTo(Postest::class, 'postest_id');
+        return $this->belongsTo(Postest::class, 'postest_pg_id');
     }
 
     // Relasi dengan model User (Siswa)

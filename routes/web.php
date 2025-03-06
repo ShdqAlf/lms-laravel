@@ -77,6 +77,9 @@ Route::post('penilaianlkpd/simpan', [penilaianLkpdController::class, 'simpanNila
 // Penilaian LKPDKelompok
 Route::get('penilaianlkpdKelompok', [penilaianLkpdController::class, 'pilihLkpdKelompok'])->name('penilaianlkpdkelompok');
 Route::get('penilaianlkpdkelompok/{course_id}', [penilaianLkpdController::class, 'penilaianLkpdKelompok'])->name('pilihLkpdKelompok');
+Route::get('lihatjawabanlkpdkelompok/{user_id}/{course_id}', [penilaianLkpdController::class, 'lihatJawabanLkpdKelompok'])->name('lihatJawabanLkpdKelompok');
+Route::post('simpanNilaiLkpdKelompok', [penilaianLkpdController::class, 'simpanNilaiLkpdKelompok'])->name('simpanNilaiLkpdKelompok');
+
 // Kelola Pretest
 Route::get('kelolapretest', [kelolaPretestController::class, 'kelolapretest'])->name('kelolapretest');
 Route::post('kelolapretest/store', [kelolaPretestController::class, 'store'])->name('storepretest');

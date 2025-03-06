@@ -210,11 +210,53 @@ class coursesController extends Controller
     {
         $user_id = $request->user_id;
 
-        foreach ($request->jawaban as $postest_id => $jawaban) {
+        // Inisialisasi path gambar sebagai null
+        $gambarPath = null;
+
+        // Loop through the submitted answers
+        foreach ($request->jawaban as $pretest_id => $jawaban) {
+            // Check if the question is a multiple-choice question or an essay question
+            $question = jawabanLkpdKelompok::find($pretest_id);
+
+            if ($question)
+                // This is an essay question
+                $question = jawabanLkpdKelompok::find($pretest_id);
+
+            // Inisialisasi path gambar sebagai null
+            $gambarPath = null;
+
+            // Cek apakah ada gambar yang dikirim dari canvas
+            if ($request->has("gambar_canvas.$pretest_id")) {
+                $imageData = $request->input("gambar_canvas.$pretest_id");
+
+                if ($imageData) {
+                    // Decode Base64 image
+                    $image = str_replace('data:image/png;base64,', '', $imageData);
+                    $image = str_replace(' ', '+', $image);
+                    $imageName = 'jawaban_' . $user_id . '_' . $pretest_id . '_' . time() . '.png';
+
+                    // Path penyimpanan di Laravel Storage
+                    $destinationPath = storage_path('app/public/jawaban_pretest');
+
+                    // Pastikan folder penyimpanan sudah ada
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0777, true);
+                    }
+
+                    // Simpan gambar ke storage Laravel
+                    file_put_contents($destinationPath . '/' . $imageName, base64_decode($image));
+
+                    // Simpan path gambar yang bisa diakses oleh public
+                    $gambarPath = "jawaban_pretest/" . $imageName;
+                }
+            }
+
+            // Simpan jawaban dengan path gambar (jika ada)
             jawabanLkpdKelompok::create([
-                'lkpd_kelompok_id' => $postest_id,
+                'lkpd_kelompok_id' => $pretest_id,
                 'user_id' => $user_id,
-                'jawaban' => $jawaban
+                'jawaban' => $jawaban, // Store the written answer
+                'gambar_jawaban' => $gambarPath // Store image path if available
             ]);
         }
 

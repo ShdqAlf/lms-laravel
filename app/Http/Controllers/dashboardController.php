@@ -57,12 +57,23 @@ class dashboardController extends Controller
 
         $students = $students->map(function ($student) use ($courses) {
             $hadirHariIni = Kehadiran::checkAttendance($student->id);
-            $student->status_kehadiran = $hadirHariIni ? '✅' : '❌';
 
+            // Logika untuk menentukan status kehadiran
             $answeredPretest = JawabanPretest::where('user_id', $student->id)->exists();
-            $student->status_pengisian_pretest = $answeredPretest ? 'Sudah Mengisi' : 'Belum Mengisi';
-
             $answeredPostest = JawabanPostest::where('user_id', $student->id)->exists();
+
+            if (!$answeredPretest) {
+                $student->status_kehadiran = 'Pretest';
+            } elseif ($answeredPretest && !$answeredPostest) {
+                $course = Course::find($student->course_opened);
+                $student->status_kehadiran = $course ? $course->course : 'Course Not Found';
+            } elseif ($answeredPostest) {
+                $student->status_kehadiran = 'Postest';
+            } else {
+                $student->status_kehadiran = '❌'; // Default status jika tidak ada kondisi yang terpenuhi
+            }
+
+            $student->status_pengisian_pretest = $answeredPretest ? 'Sudah Mengisi' : 'Belum Mengisi';
             $student->status_pengisian_postest = $answeredPostest ? 'Sudah Mengisi' : 'Belum Mengisi';
 
             // Variabel sementara untuk menyimpan status pengisian tiap course

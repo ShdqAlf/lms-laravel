@@ -9,10 +9,10 @@
     </header>
 
     <div class="pagetitle">
-        <h1>Postest</h1> <!-- Menampilkan nama user -->
+        <h1>Pretest</h1> <!-- Menampilkan nama user -->
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Kerjakan Postest</li> <!-- Menampilkan role user -->
+                <li class="breadcrumb-item active">Kerjakan Pretest</li> <!-- Menampilkan role user -->
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -34,27 +34,27 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body" style="background-color: #007bff;">
-                            <!-- Container Content postest -->
+                            <!-- Container Content Pretest -->
                             <div id="content-3" style="background-color: #E0FFFF;">
                                 <a href="#" onclick="showPretestModal(event)" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
                                     <i class="bi bi-file-earmark-play-fill text-danger me-3" style="font-size: 1.8rem;"></i>
                                     <div>
-                                        <p class="m-0 fw-bold">Kerjakan postest</p>
+                                        <p class="m-0 fw-bold">Kerjakan Pretest</p>
                                         <small class="text-muted">
-                                            Kamu {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengerjakan Postest. {{ $hasSubmitted ? 'Nilai Kamu: ': '' }} {{ $score ? $score->score : '' }}
+                                            Kamu {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengerjakan Pretest. {{ $hasSubmitted ? 'Nilai Kamu: ': '' }} {{ $score ? $score->score : '' }}
                                         </small>
                                     </div>
                                 </a>
                             </div>
-                            <!-- End of Container Content postest -->
+                            <!-- End of Container Content Pretest -->
                         </div>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="postestModal" tabindex="-1" aria-labelledby="postestModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="pretestModal" tabindex="-1" aria-labelledby="pretestModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="postestModalLabel">Konfirmasi</h5>
+                                        <h5 class="modal-title" id="pretestModalLabel">Konfirmasi</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -63,7 +63,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                         @if(!$hasSubmitted)
-                                        <a href="{{ route('showpostestQuestions') }}" class="btn btn-primary">Mulai postest</a>
+                                        <a href="{{ route('showpostestQuestions') }}" class="btn btn-primary">Mulai Postest</a>
                                         @endif
                                     </div>
                                 </div>
@@ -72,10 +72,10 @@
 
                         <!-- Script to Show Modal -->
                         <script>
-                            function showpostestModal(event) {
+                            function showPretestModal(event) {
                                 event.preventDefault();
-                                var postestModal = new bootstrap.Modal(document.getElementById('postestModal'));
-                                postestModal.show();
+                                var pretestModal = new bootstrap.Modal(document.getElementById('pretestModal'));
+                                pretestModal.show();
                             }
                         </script>
 
