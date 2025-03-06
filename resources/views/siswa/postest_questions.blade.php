@@ -23,12 +23,12 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('storeAnswers') }}" method="POST">
+                            <form action="{{ route('storeAnswersPostest') }}" method="POST">
                                 @csrf
                                 <input type="text" name="user_id" class="hidden" value="{{ Auth::user()->id }}">
                                 @foreach($questions as $index => $question)
                                 <div class="mb-4">
-                                    <h5>{{ $index + 1 }}. {{ $question->soal_postest }}</h5>
+                                    <h5>{{ $index + 1 }}. {!! nl2br(e($question->soal_postest)) !!}</h5>
                                     <textarea name="jawaban[{{ $question->id }}]" class="form-control" placeholder="Masukkan jawaban Anda"></textarea>
                                 </div>
                                 @endforeach

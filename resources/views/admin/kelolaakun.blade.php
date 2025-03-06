@@ -45,6 +45,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nama</th>
+                                        <th>NIS</th>
                                         <th>Role</th>
                                         <th>Course</th>
                                         <th>Aksi</th>
@@ -54,6 +55,7 @@
                                     @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->nama }}</td>
+                                        <td>{{ $user->nomor_id }}</td>
                                         <td>{{ ucfirst($user->role) }}</td>
                                         <td>{{ $user->course->course ?? '-' }}</td>
                                         <td>

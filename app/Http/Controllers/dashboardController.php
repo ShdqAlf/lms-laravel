@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\User;
-use App\Models\JadwalKegiatan;
-use App\Models\JawabanPretest;
-use App\Models\JawabanPostest;
+use App\Models\jadwalKegiatan;
+use App\Models\jawabanPretest;
+use App\Models\jawabanPostest;
 use App\Models\pengumpulanLkpd;
-use App\Models\NilaiPretest;
-use App\Models\NilaiPostest;
+use App\Models\nilaiPretest;
+use App\Models\nilaiPostest;
 use App\Models\nilaiLkpd;
+use App\Models\Kehadiran;
+use Carbon\Carbon;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -24,6 +26,9 @@ class dashboardController extends Controller
 
         // Ambil data siswa
         $student = $user;
+
+        // Cek apakah siswa sudah hadir hari ini
+        $hadirHariIni = Kehadiran::checkAttendance($student->id);
 
         // Pretest status dan nilai
         $pretestScore = NilaiPretest::where('user_id', $student->id)->value('score');
@@ -51,6 +56,9 @@ class dashboardController extends Controller
         $students = User::where('role', 'siswa')->get();
 
         $students = $students->map(function ($student) use ($courses) {
+            $hadirHariIni = Kehadiran::checkAttendance($student->id);
+            $student->status_kehadiran = $hadirHariIni ? '✅' : '❌';
+
             $answeredPretest = JawabanPretest::where('user_id', $student->id)->exists();
             $student->status_pengisian_pretest = $answeredPretest ? 'Sudah Mengisi' : 'Belum Mengisi';
 
@@ -88,7 +96,7 @@ class dashboardController extends Controller
         }
 
         // Modify query to include the user's name and role
-        $eventsQuery = JadwalKegiatan::select(
+        $eventsQuery = jadwalKegiatan::select(
             'deskripsi_kegiatan as title',
             'tanggal_kegiatan as start',
             'user_id'
@@ -111,7 +119,7 @@ class dashboardController extends Controller
             })->toArray();
         }
 
-        return view('dashboard.dashboard', compact('courses', 'events', 'students', 'jumlahBelumPretest', 'jumlahBelumPostest', 'jumlahBelumLkpd', 'student'));
+        return view('dashboard.dashboard', compact('courses', 'events', 'students', 'jumlahBelumPretest', 'jumlahBelumPostest', 'jumlahBelumLkpd', 'student', 'hadirHariIni'));
     }
 
     private function hasSubmittedPretest($userId)
@@ -140,7 +148,7 @@ class dashboardController extends Controller
         ]);
 
         // Store the new event
-        JadwalKegiatan::create([
+        jadwalKegiatan::create([
             'user_id' => auth()->id(), // Ensure the user is authenticated
             'deskripsi_kegiatan' => $request->deskripsi_kegiatan,
             'tanggal_kegiatan' => $request->tanggal_kegiatan,
@@ -148,5 +156,18 @@ class dashboardController extends Controller
 
         // Redirect back with a success message
         return redirect()->route('dashboard')->with('success', 'Kegiatan berhasil ditambahkan.');
+    }
+
+    public function markAttendance(Request $request)
+    {
+        $user = auth()->user();
+
+        Kehadiran::create([
+            'user_id' => $user->id,
+            'status_kehadiran' => 'Hadir',
+            'tanggal_masuk' => Carbon::today(),
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Kehadiran berhasil dicatat.');
     }
 }

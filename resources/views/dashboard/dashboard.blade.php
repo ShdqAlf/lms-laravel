@@ -1,6 +1,25 @@
 @include('layout/head')
 @include('layout/side')
+<style>
+    .d-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
 
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .text-end {
+        text-align: right;
+    }
+</style>
 <div id="main">
     <header class="mb-3">
         <a href="#" class="burger-btn d-block d-xl-none">
@@ -12,7 +31,7 @@
         <h1>Selamat Datang, {{ Auth::user()->nama }}</h1> <!-- Menampilkan nama user -->
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Kamu adalah {{ Auth::user()->role }} @if (Auth::user()->role === 'guru' && Auth::user()->course) {{ Auth::user()->course->course }} @endif</li> <!-- Menampilkan role user -->
+                <li class="breadcrumb-item active">Kamu adalah {{ Auth::user()->role }}</li> <!-- Menampilkan role user -->
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -23,63 +42,100 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            {{-- Menu untuk Guru --}}
+                            @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                            @endif
                             @if (Auth::user()->role == 'guru')
                             <div class="row">
-                                <!-- Jumlah Siswa yang belum mengumpulkan penugasan -->
-                                <div class="col-12 col-lg-4">
-                                    <div class="card shadow-sm">
-                                        <div class="card-header bg-primary text-white">
-                                            <h5 class="mb-0">Jumlah Penugasan Belum Terkumpul</h5>
+                                <!-- Wrapper untuk menyelaraskan tabel Kehadiran dan Penugasan -->
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <!-- Tabel Status Kehadiran Siswa -->
+                                    <div class="col-12 col-lg-5">
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-primary text-white">
+                                                <h5 class="mb-0" style="color: white;">Status Kehadiran Siswa</h5>
+                                            </div>
+                                            <div class="card-body" style="background-color: #E0FFFF;">
+                                                <table class="table table-bordered table-hover mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama</th>
+                                                            <th>NIS</th>
+                                                            <th>Kehadiran</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($students as $student)
+                                                        <tr>
+                                                            <td>{{ $student->nama }}</td>
+                                                            <td>{{ $student->nomor_id }}</td>
+                                                            <td class="text-center">{{ $student->status_kehadiran }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <table class="table table-borderless table-hover mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Penugasan</th>
-                                                        <th class="text-end">Jumlah</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Pretest</td>
-                                                        <td class="text-end">{{ $jumlahBelumPretest }} Siswa</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Postest</td>
-                                                        <td class="text-end">{{ $jumlahBelumPostest }} Siswa</td>
-                                                    </tr>
-                                                    @foreach ($courses as $course)
-                                                    <tr>
-                                                        <td>LKPD {{ $course->course }}</td>
-                                                        <td class="text-end">{{ $jumlahBelumLkpd[$course->id] }} Siswa</td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                    </div>
+
+                                    <!-- Tabel Jumlah Penugasan Belum Terkumpul -->
+                                    <div class="col-12 col-lg-6">
+                                        <div class="card shadow-sm">
+                                            <div class="card-header bg-primary text-white">
+                                                <h5 class="mb-0" style="color: white;">Jumlah Penugasan Belum Terkumpul</h5>
+                                            </div>
+                                            <div class="card-body" style="background-color: #E0FFFF;">
+                                                <table class="table table-borderless table-hover mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Penugasan</th>
+                                                            <th class="text-end">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Pretest</td>
+                                                            <td class="text-end">{{ $jumlahBelumPretest }} Siswa</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Postest</td>
+                                                            <td class="text-end">{{ $jumlahBelumPostest }} Siswa</td>
+                                                        </tr>
+                                                        @foreach ($courses as $course)
+                                                        <tr>
+                                                            <td>LKPD {{ $course->course }}</td>
+                                                            <td class="text-end">{{ $jumlahBelumLkpd[$course->id] }} Siswa</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Tabel Status Pengumpulan Penugasan Siswa -->
-                                <div class="col-12 col-lg-8">
+                                <div class="col-12 mt-3">
                                     <div class="card shadow-sm">
                                         <div class="card-header bg-primary text-white">
-                                            <h5 class="mb-0">Tabel Status Pengumpulan Penugasan Siswa</h5>
+                                            <h5 class="mb-0" style="color: white;">Tabel Status Pengumpulan Penugasan Siswa</h5>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body" style="background-color: #E0FFFF;">
                                             <div class="table-responsive">
-                                                <table id="datatable" class="table table-bordered table-striped table-hover mb-0">
-                                                    <thead class="table-light text-center">
+                                                <!-- kalo mau balikin datatablenya tinggal isi id="datatable"-->
+                                                <table id="" class="table table-bordered table-striped table-hover mb-0">
+                                                    <thead>
                                                         <tr>
-                                                            <th style="width: 5%;">No</th>
-                                                            <th style="width: 25%;">Nama Siswa</th>
-                                                            <th style="width: 15%;">NIS</th>
-                                                            <th style="width: 15%;">Pretest</th>
+                                                            <th>No</th>
+                                                            <th>Nama Siswa</th>
+                                                            <th>NIS</th>
+                                                            <th>Pretest</th>
                                                             @foreach ($courses as $course)
-                                                            <th style="width: 20%;">{{ $course->course }}</th>
+                                                            <th>{{ $course->course }}</th>
                                                             @endforeach
-                                                            <th style="width: 15%;">Postest</th>
+                                                            <th>Postest</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="text-center">
@@ -114,17 +170,26 @@
                                     </div>
                                 </div>
                             </div>
-
                             @endif
 
+
                             @if (Auth::user()->role == 'siswa')
-                            <div class="card">
-                                <div class="card-header">
+                            <div class="card" style="background-color: #E0FFFF;">
+                                <div class="card-header" style="background-color: #E0FFFF;"">
                                     <h4>Kartu Nilai Siswa</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class=" card-body">
                                     <p><strong>Nama:</strong> {{ $student->nama }}</p>
                                     <p><strong>NIS:</strong> {{ $student->nomor_id }}</p>
+                                    <!-- <p><strong>Kehadiran:</strong>
+                                        @if ($hadirHariIni)
+                                        <span class="badge bg-success">Hadir</span>
+                                        @else
+                                    <form action="{{ route('markAttendance') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Klik untuk Hadir</button>
+                                    </form>
+                                    @endif -->
 
                                     <table class="table">
                                         <thead>

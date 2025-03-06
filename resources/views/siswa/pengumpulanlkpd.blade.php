@@ -32,8 +32,9 @@
                                     <p>Status Pengumpulan: {{ $hasSubmitted ? 'Sudah' : 'Belum' }} Mengumpulkan.
                                         <!-- Tambahkan link download jika sudah mengumpulkan -->
                                         @if($hasSubmitted)
-                                        <a href="{{ asset('storage/' . $filePath) }}" target="_blank"> Klik untuk mendownload file</a>
+                                        <a href="{{ asset($filePath) }}" target="_blank"> Klik untuk mendownload file</a>
                                         @endif
+
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center mt-4">

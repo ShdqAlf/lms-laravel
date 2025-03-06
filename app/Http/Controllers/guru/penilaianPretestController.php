@@ -5,7 +5,9 @@ namespace App\Http\Controllers\guru;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\JawabanPretest;
+use App\Models\jawabanPretest;
+use App\Models\jawabanPretestPg;
+use App\Models\PretestPg;
 use App\Models\nilaiPretest;
 
 class penilaianPretestController extends Controller
@@ -17,7 +19,7 @@ class penilaianPretestController extends Controller
 
         // Mengambil status pengisian pretest dan nilai untuk setiap siswa
         $students = $students->map(function ($student) {
-            $hasAnswered = JawabanPretest::where('user_id', $student->id)->exists();
+            $hasAnswered = jawabanPretest::where('user_id', $student->id)->exists();
             $student->status_pengisian = $hasAnswered ? 'Sudah Mengisi' : 'Belum Mengisi';
 
             // Ambil nilai dari tabel nilai_pretest jika sudah dinilai
@@ -33,8 +35,11 @@ class penilaianPretestController extends Controller
 
     public function lihatJawaban($user_id)
     {
-        $jawabanPretests = JawabanPretest::where('user_id', $user_id)->get();
-        return view('guru.lihatjawaban', compact('jawabanPretests', 'user_id'));
+        $soalPretestPgs = PretestPg::get();
+        $jawabanPretests = jawabanPretest::where('user_id', $user_id)->get();
+        $jawabanPretestPgs = jawabanPretestPg::where('user_id', $user_id)->get();
+
+        return view('guru.lihatjawaban', compact('soalPretestPgs', 'jawabanPretests', 'jawabanPretestPgs', 'user_id'));
     }
 
 

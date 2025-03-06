@@ -33,9 +33,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: #007bff;">
                             <!-- Container Content Pretest -->
-                            <div id="content-3" class="p-4 bg-white">
+                            <div id="content-3" style="background-color: #E0FFFF;">
                                 <a href="#" onclick="showPretestModal(event)" class="d-flex align-items-center p-3 border border-gray-200 rounded-lg text-decoration-none text-dark hover-bg-light">
                                     <i class="bi bi-file-earmark-play-fill text-danger me-3" style="font-size: 1.8rem;"></i>
                                     <div>
@@ -58,7 +58,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        {{ $hasSubmitted ? 'Anda sudah mengerjakan pretest dan tidak bisa mengisi kembali.' : 'Apakah kamu ingin memulai pretest?' }}
+                                        {{ $hasSubmitted ? 'Anda sudah mengerjakan pretest dan tidak bisa mengisi kembali.' : 'Petunjuk Pengerjaan: Jawab soal essai dengan teleti dan jelas, apabila ada soal yang memerlukan penjelasan dengan langkah-langkah, misalkan soal penjadwalan proses dimana proses A ke B dapat dijawab dengan menggunakan anak panah dengan symbol (->) dibuat dengan strip dua kali dan kurung segitiga kanan. Apabila jawabannya beranak dapat menggunakan poin.' }}
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

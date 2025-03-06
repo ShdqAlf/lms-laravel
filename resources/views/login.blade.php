@@ -29,8 +29,8 @@
         .screen {
             background: linear-gradient(90deg, #5D54A4, #7C78B8);
             position: relative;
-            height: 600px;
-            width: 360px;
+            height: 650px;
+            width: 540px;
             box-shadow: 0px 0px 24px #5C5696;
         }
 
@@ -206,9 +206,8 @@
                         <span class="button__text">Log In</span>
                         <i class="button__icon fas fa-chevron-right"></i>
                     </button>
-                </form>
-
-                <!-- Error messages -->
+                    <br>
+                                    <!-- Error messages -->
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -218,6 +217,7 @@
                     </ul>
                 </div>
                 @endif
+                </form>
             </div>
             <div class="screen__background">
                 <span class="screen__background__shape screen__background__shape4"></span>

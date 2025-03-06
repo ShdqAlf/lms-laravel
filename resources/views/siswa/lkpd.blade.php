@@ -26,7 +26,12 @@
                         <div class="card-body">
                             <div class="container mt-5">
                                 <h3>{{ $lkpd->deskripsi_lkpd }}</h3>
-                                <embed type="application/pdf" src="{{ asset('storage/' . $lkpd->pdf_lkpd) }}" width="100%" height="600px"></embed>
+    <iframe 
+        src="https://docs.google.com/gview?url={{ asset($lkpd->pdf_lkpd) }}&embedded=true" 
+        width="100%" 
+        height="600px" 
+        frameborder="0">
+    </iframe>
                             </div>
                         </div>
                     </div>

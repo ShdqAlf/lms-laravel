@@ -24,7 +24,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5>Jawaban Postest Siswa</h5>
-                            <form action="{{ route('storeScore', $user_id) }}" method="POST">
+                            <form action="{{ route('storeScorePostest', $user_id) }}" method="POST">
                                 @csrf
                                 @foreach($jawabanPostests as $index => $jawaban)
                                 <div class="mb-4">

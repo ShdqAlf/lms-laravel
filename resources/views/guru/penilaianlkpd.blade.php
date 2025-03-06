@@ -54,7 +54,7 @@
                                         <td>{{ $student->nilai }}</td>
                                         <td>
                                             @if($student->status_pengisian == 'Sudah Mengisi')
-                                            <a href="{{ asset('storage/' . $student->file_jawaban) }}" target="_blank">{{ $student->nama_file }}</a>
+                                            <a href="{{ asset($student->file_jawaban) }}" target="_blank">{{ $student->nama_file }}</a>
                                             @else
                                             {{ $student->nama_file }}
                                             @endif

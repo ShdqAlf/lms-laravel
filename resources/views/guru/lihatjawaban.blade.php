@@ -26,10 +26,25 @@
                             <h5>Jawaban Pretest Siswa</h5>
                             <form action="{{ route('storeScorePretest', $user_id) }}" method="POST">
                                 @csrf
+                                <!-- Display Multiple Choice Answers -->
+                                <h5>Jawaban Pilihan Ganda</h5>
+                                @foreach($soalPretestPgs as $index => $soalPretest)
+                                <div class="mb-4">
+                                    <h5>{{ $index + 1 }}. {{ $soalPretest->soal_pretest }}</h5>
+                                    @endforeach
+                                    @foreach($jawabanPretestPgs as $index => $jawabanPg)
+                                    <p>Jawaban: {{ $jawabanPg->jawaban }}</p>
+                                </div>
+                                @endforeach
+
+
+                                <!-- Display Essay Answers -->
+                                <h5>Jawaban Uraian</h5>
                                 @foreach($jawabanPretests as $index => $jawaban)
                                 <div class="mb-4">
                                     <h5>{{ $index + 1 }}. {{ $jawaban->pretest->soal_pretest }}</h5>
                                     <textarea name="jawaban" rows="4" class="form-control" readonly>{{ $jawaban->jawaban }}</textarea>
+                                    <img src="{{ asset('storage/' . $jawaban->gambar_jawaban) }}" alt="Jawaban Gambar">
                                     <input type="hidden" name="pretest_id[]" value="{{ $jawaban->pretest->id }}">
                                 </div>
                                 @endforeach

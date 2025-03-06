@@ -38,6 +38,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('kelolakelompok') }}" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Kelola Kelompok</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book-half"></i>
@@ -49,6 +55,9 @@
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="{{ route('penilaianlkpd') }}">Penilaian LKPD</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="{{ route('penilaianlkpdkelompok') }}">Penilaian LKPD Kelompok</a>
                                 </li>
                             </ul>
                         </li>
@@ -69,7 +78,13 @@
                         <li class="sidebar-item">
                             <a href="{{ route('leaderboard') }}" class='sidebar-link'>
                                 <i class="bi bi-award"></i>
-                                <span>Leaderboard</span>
+                                <span>Rekap Nilai</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('kelolamanualbook') }}" class='sidebar-link'>
+                                <i class="bi bi-book-half"></i>
+                                <span>Kelola Manual Book</span>
                             </a>
                         </li>
                         @endif
@@ -83,20 +98,23 @@
                                 <span>Pretest</span>
                             </a>
                         </li>
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-book-half"></i>
                                 <span>Courses</span>
                             </a>
-                            <ul class="submenu ">
-                                <!-- Looping Course -->
+                            <ul class="submenu">
                                 @foreach ($courses as $course)
-                                <li class="submenu-item ">
-                                    <a href="{{ route('course', $course->id) }}">{{ $course->course }}</a>
+                                <li class="submenu-item">
+                                    <a href="{{ route('course', $course->id) }}"
+                                        style="color: {{ Auth::user()->course_opened < $course->id ? '#888' : '#007bff' }}; pointer-events: {{ Auth::user()->course_opened < $course->id ? 'none' : 'auto' }};">
+                                        {{ $course->course }}
+                                    </a>
                                 </li>
                                 @endforeach
                             </ul>
                         </li>
+
                         <li class="sidebar-item  ">
                             <a href="{{ route('postest') }}" class='sidebar-link'>
                                 <i class="bi-file-text-fill"></i>
@@ -107,6 +125,12 @@
                             <a href="{{ route('leaderboard') }}" class='sidebar-link'>
                                 <i class="bi bi-award"></i>
                                 <span>Leaderboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('manualbook') }}" class='sidebar-link'>
+                                <i class="bi bi-book-half"></i>
+                                <span>Manual Book</span>
                             </a>
                         </li>
                         @endif

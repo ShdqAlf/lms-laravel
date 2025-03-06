@@ -5,9 +5,12 @@ namespace App\Http\Controllers\guru;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Kelompok;
 use App\Models\Course;
 use App\Models\pengumpulanLkpd;
-use App\Models\NilaiLkpd;
+use App\Models\nilaiLkpd;
+use App\Models\jawabanLkpdKelompok;
+use App\Models\nilaiLkpdKelompok;
 
 class penilaianLkpdController extends Controller
 {
@@ -20,6 +23,15 @@ class penilaianLkpdController extends Controller
         return view('guru.pilihlkpd', compact('courses'));
     }
 
+    public function pilihLkpdKelompok()
+    {
+        // Ambil semua course untuk ditampilkan di dropdown
+        $courses = Course::all();
+
+        // Tampilkan halaman pemilihan course
+        return view('guru.pilihlkpdkelompok', compact('courses'));
+    }
+
     public function penilaianLkpd($course_id)
     {
         $students = User::where('role', 'siswa')->get();
@@ -30,7 +42,7 @@ class penilaianLkpdController extends Controller
                 ->exists();
             $student->status_pengisian = $hasAnswered ? 'Sudah Mengisi' : 'Belum Mengisi';
 
-            $nilai = NilaiLkpd::where('user_id', $student->id)
+            $nilai = nilaiLkpd::where('user_id', $student->id)
                 ->where('lkpd_id', $course_id)
                 ->first();
             $student->nilai = $nilai ? $nilai->score : 'Belum Dinilai';
@@ -48,6 +60,19 @@ class penilaianLkpdController extends Controller
         return view('guru.penilaianlkpd', compact('students', 'course_id'));
     }
 
+    public function penilaianLkpdKelompok($course_id)
+    {
+        // Mengambil semua data kelompok dengan relasi 'users'
+        $kelompok = Kelompok::with(['users' => function ($query) {
+            // Mengambil status pengisian untuk setiap siswa
+            $query->with(['jawabanLkpdKelompok' => function ($q) {
+                $q->select('user_id'); // Pilih data yang diperlukan
+            }]);
+        }])->get();
+
+        // Tidak perlu lagi mengambil $students di sini karena sudah ada dalam $kelompok
+        return view('guru.penilaianlkpdkelompok', compact('kelompok'));
+    }
 
     public function simpanNilai(Request $request)
     {
@@ -59,7 +84,7 @@ class penilaianLkpdController extends Controller
         ]);
 
         // Simpan atau update nilai ke tabel nilai_lkpd
-        NilaiLkpd::updateOrCreate(
+        nilaiLkpd::updateOrCreate(
             [
                 'user_id' => $request->user_id,
                 'lkpd_id' => $request->course_id

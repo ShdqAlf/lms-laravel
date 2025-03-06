@@ -9,10 +9,10 @@
     </header>
 
     <div class="pagetitle">
-        <h1>Leaderboard Nilai</h1> <!-- Menampilkan nama user -->
+        <h1>@if (Auth::user()->role == 'guru') Rekap Nilai @elseif (Auth::user()->role == 'siswa') Leaderboard @endif</h1> <!-- Menampilkan nama user -->
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Rekap Nilai Keseluruhan Siswa</li> <!-- Menampilkan role user -->
+                <li class="breadcrumb-item active">@if (Auth::user()->role == 'guru') Rekap Nilai Keseluruhan Siswa @elseif (Auth::user()->role == 'siswa') Leaderboard Nilai Siswa @endif</li> <!-- Menampilkan role user -->
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: #E0FFFF;">
                             <table class="table">
                                 <thead>
                                     <tr>

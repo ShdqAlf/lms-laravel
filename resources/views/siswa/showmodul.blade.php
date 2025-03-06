@@ -25,12 +25,18 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Materi Modul</h5>
-                            @if($modul)
-                            <p>{{ $modul->deskripsi_modul }}</p>
-                            <embed type="application/pdf" src="{{ asset('storage/' . $modul->pdf_modul) }}" width="100%" height="600px">
-                            @else
-                            <p>Belum ada modul yang tersedia.</p>
-                            @endif
+@if($modul)
+    <p>{{ $modul->deskripsi_modul }}</p>
+    <iframe 
+        src="https://docs.google.com/gview?url={{ asset($modul->pdf_modul) }}&embedded=true" 
+        width="100%" 
+        height="600px" 
+        frameborder="0">
+    </iframe>
+@else
+    <p>Belum ada modul yang tersedia.</p>
+@endif
+
                         </div>
                     </div>
                 </div>

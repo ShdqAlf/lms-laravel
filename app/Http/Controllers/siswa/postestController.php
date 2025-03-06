@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Postest;
 use App\Models\jawabanPostest;
-use App\Models\NilaiPostest;
+use App\Models\nilaiPostest;
 use Auth;
 
 class PostestController extends Controller
@@ -21,7 +21,7 @@ class PostestController extends Controller
         $hasSubmitted = jawabanPostest::where('user_id', $user_id)->exists();
 
         // Retrieve the score if it exists
-        $score = NilaiPostest::where('user_id', $user_id)->first();
+        $score = nilaiPostest::where('user_id', $user_id)->first();
 
         return view('siswa.postest', compact('courses', 'hasSubmitted', 'score'));
     }

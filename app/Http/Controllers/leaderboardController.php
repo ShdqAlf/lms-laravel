@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\nilaiPretest;
-use App\Models\NilaiPostest;
+use App\Models\nilaiPostest;
 use App\Models\nilaiLkpd;
 use App\Models\Course;
 
@@ -22,7 +22,7 @@ class leaderboardController extends Controller
             $student->nilaiPretest = $nilaiPretest ? $nilaiPretest->score : 0;
 
             // Ambil nilai postest
-            $nilaiPostest = NilaiPostest::where('user_id', $student->id)->first();
+            $nilaiPostest = nilaiPostest::where('user_id', $student->id)->first();
             $student->nilaiPostest = $nilaiPostest ? $nilaiPostest->score : 0;
 
             // Array sementara untuk nilai LKPD setiap course
